@@ -2,7 +2,7 @@
 theme: jekyll-theme-chirpy
 lang: es-ES
 
-title: "0xmrs"
+title: "mrsx0A"
 tagline: ""
 
 url: "https://maariooors.github.io"
@@ -10,6 +10,8 @@ baseurl: ""
 
 github:
   username: maariooors
+
+footer_name: "mrsx0A"
 
 avatar: /assets/img/avatar.png
 toc: true

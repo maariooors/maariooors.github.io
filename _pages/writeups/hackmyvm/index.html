@@ -6,7 +6,7 @@ permalink: /writeups/hackmyvm/
 
 {% include lang.html %}
 
-{% assign posts = site.posts | where_exp: "p", "p.tags contains 'writeup' and p.tags contains 'hvm'" %}
+{% assign posts = site.posts | where_exp: "p", "p.tags contains 'hackmyvm'" %}
 {% assign posts = posts | where_exp: "p", "p.hidden != true" %}
 
 <div id="post-list" class="flex-grow-1 px-xl-1">
@@ -14,26 +14,50 @@ permalink: /writeups/hackmyvm/
     <article class="card-wrapper card">
       <a href="{{ post.url | relative_url }}" class="post-preview row g-0 flex-md-row-reverse">
         {% assign card_body_col = '12' %}
+
         {% if post.image %}
           {% assign src = post.image.path | default: post.image %}
+
           {% if post.media_subpath %}
             {% unless src contains '://' %}
-              {% assign src = post.media_subpath | append: '/' | append: src | replace: '///', '/' | replace: '//', '/' %}
+              {% assign src = post.media_subpath
+                | append: '/'
+                | append: src
+                | replace: '///', '/'
+                | replace: '//', '/'
+              %}
             {% endunless %}
           {% endif %}
+
           {% if post.image.lqip %}
             {% assign lqip = post.image.lqip %}
+
             {% if post.media_subpath %}
               {% unless lqip contains 'data:' %}
-                {% assign lqip = post.media_subpath | append: '/' | append: lqip | replace: '///', '/' | replace: '//', '/' %}
+                {% assign lqip = post.media_subpath
+                  | append: '/'
+                  | append: lqip
+                  | replace: '///', '/'
+                  | replace: '//', '/'
+                %}
               {% endunless %}
             {% endif %}
+
             {% assign lqip_attr = 'lqip="' | append: lqip | append: '"' %}
           {% endif %}
+
           {% assign alt = post.image.alt | xml_escape | default: 'Preview Image' %}
-          <div class="col-md-5">
-            <img src="{{ src }}" alt="{{ alt }}" {{ lqip_attr }}>
+
+          <!-- MISMO BLOQUE que en Vulnerabilidades -->
+          <div class="col-md-5" style="height: 160px; overflow: hidden;">
+            <img
+              src="{{ src | relative_url }}"
+              alt="{{ alt }}"
+              {{ lqip_attr }}
+              style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;"
+            >
           </div>
+
           {% assign card_body_col = '7' %}
         {% endif %}
 
@@ -55,6 +79,7 @@ permalink: /writeups/hackmyvm/
               <div class="me-auto">
                 <i class="far fa-calendar fa-fw me-1"></i>
                 {% include datetime.html date=post.date lang=lang %}
+
                 {% if post.categories.size > 0 %}
                   <i class="far fa-folder-open fa-fw me-1"></i>
                   <span class="categories">

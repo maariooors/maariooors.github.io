@@ -1,12 +1,9 @@
 ---
-layout: page
+layout: default
 ---
 
 {% include lang.html %}
 
-{%- comment -%}
-Filtra igual que tu HTB (where_exp + contains), pero usando la variable page.tag.
-{%- endcomment -%}
 {% assign posts = site.posts | where_exp: "p", "p.tags contains page.tag" %}
 {% assign posts = posts | where_exp: "p", "p.hidden != true" %}
 
@@ -15,26 +12,52 @@ Filtra igual que tu HTB (where_exp + contains), pero usando la variable page.tag
     <article class="card-wrapper card">
       <a href="{{ post.url | relative_url }}" class="post-preview row g-0 flex-md-row-reverse">
         {% assign card_body_col = '12' %}
+
         {% if post.image %}
           {% assign src = post.image.path | default: post.image %}
+
           {% if post.media_subpath %}
             {% unless src contains '://' %}
-              {% assign src = post.media_subpath | append: '/' | append: src | replace: '///', '/' | replace: '//', '/' %}
+              {% assign src = post.media_subpath
+                | append: '/'
+                | append: src
+                | replace: '///', '/'
+                | replace: '//', '/'
+              %}
             {% endunless %}
           {% endif %}
+
           {% if post.image.lqip %}
             {% assign lqip = post.image.lqip %}
+
             {% if post.media_subpath %}
               {% unless lqip contains 'data:' %}
-                {% assign lqip = post.media_subpath | append: '/' | append: lqip | replace: '///', '/' | replace: '//', '/' %}
+                {% assign lqip = post.media_subpath
+                  | append: '/'
+                  | append: lqip
+                  | replace: '///', '/'
+                  | replace: '//', '/'
+                %}
               {% endunless %}
             {% endif %}
+
             {% assign lqip_attr = 'lqip="' | append: lqip | append: '"' %}
           {% endif %}
+
           {% assign alt = post.image.alt | xml_escape | default: 'Preview Image' %}
-          <div class="col-md-5">
-            <img src="{{ src }}" alt="{{ alt }}" {{ lqip_attr }}>
+
+          {%- comment -%}
+          MISMO BLOQUE que en Vulnerabilidades: alto fijo + crop con object-fit: cover
+          {%- endcomment -%}
+          <div class="col-md-5" style="height: 160px; overflow: hidden;">
+            <img
+              src="{{ src | relative_url }}"
+              alt="{{ alt }}"
+              {{ lqip_attr }}
+              style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;"
+            >
           </div>
+
           {% assign card_body_col = '7' %}
         {% endif %}
 
@@ -46,8 +69,6 @@ Filtra igual que tu HTB (where_exp + contains), pero usando la variable page.tag
               <p>
                 {% if post.description %}
                   {{ post.description | strip_html }}
-                {% else %}
-                  {{ post.excerpt | strip_html }}
                 {% endif %}
               </p>
             </div>
@@ -56,6 +77,7 @@ Filtra igual que tu HTB (where_exp + contains), pero usando la variable page.tag
               <div class="me-auto">
                 <i class="far fa-calendar fa-fw me-1"></i>
                 {% include datetime.html date=post.date lang=lang %}
+
                 {% if post.categories.size > 0 %}
                   <i class="far fa-folder-open fa-fw me-1"></i>
                   <span class="categories">
@@ -65,10 +87,18 @@ Filtra igual que tu HTB (where_exp + contains), pero usando la variable page.tag
                   </span>
                 {% endif %}
               </div>
+
+              {% if post.pin %}
+                <div class="pin ms-1">
+                  <i class="fas fa-thumbtack fa-fw"></i>
+                  <span>{{ site.data.locales[lang].post.pin_prompt }}</span>
+                </div>
+              {% endif %}
             </div>
 
           </div>
         </div>
+
       </a>
     </article>
   {% endfor %}
