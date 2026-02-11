@@ -7,6 +7,9 @@ tagline: ""
 
 url: "https://maariooors.github.io"
 
+github:
+  username: maariooors
+
 avatar: /assets/img/avatar.png
 toc: true
 paginate: 10
