@@ -18,8 +18,12 @@ permalink: /writeups/
       {% assign src = '/assets/img/htb.png' %}
       {% assign alt = 'Hack The Box' %}
 
-      <div class="col-md-5">
-        <img src="{{ src | relative_url }}" alt="{{ alt }}">
+      <div class="col-md-5" style="height: 160px; overflow: hidden;">
+        <img
+          src="{{ src | relative_url }}"
+          alt="{{ alt }}"
+          style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;"
+        >
       </div>
 
       {% assign card_body_col = '7' %}
@@ -52,8 +56,12 @@ permalink: /writeups/
       {% assign src = '/assets/img/hmvm.png' %}
       {% assign alt = 'HackMyVM' %}
 
-      <div class="col-md-5">
-        <img src="{{ src | relative_url }}" alt="{{ alt }}">
+      <div class="col-md-5" style="height: 160px; overflow: hidden;">
+        <img
+          src="{{ src | relative_url }}"
+          alt="{{ alt }}"
+          style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;"
+        >
       </div>
 
       {% assign card_body_col = '7' %}
